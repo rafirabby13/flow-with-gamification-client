@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.home {
+    background: linear-gradient(rgba(121, 102, 102, 0.5), rgba(0, 0, 0, 0.352)), 
+                url('./assets/question-mark-2492009_1280.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.bgBtn {
+    background: linear-gradient(rgba(30, 29, 29, 0.5), rgba(0, 0, 0, 0.838)), 
+                url('./assets/question-mark-1495858_1280.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
