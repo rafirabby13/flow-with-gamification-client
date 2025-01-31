@@ -1,11 +1,23 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect } from "react";
 import { Fade } from "react-awesome-reveal";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
+import { Link, useLocation } from "react-router-dom";
+
 
 const App = () => {
 
+  const location = useLocation()
+  console.log(location)
+  const home = location.pathname == '/'
+  useEffect(()=>{
+    axios.delete("http://localhost:5000/ids").then((res) => {
+      console.log(res.data);
+    });
+    axios.delete("http://localhost:5000/marks").then((res) => {
+      console.log(res.data);
+    });
+  },[home])
 
 
 

@@ -3,27 +3,19 @@ import useAllData from "../hooks/useAllData";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import axios from "axios";
 const Quiz = () => {
   const [selectedId, setSelectedId] = useState(null);
   const [selectedQuestion, setSelectedQuestion] = useState({});
   const [mark, setMark] = useState(0);
   const [allData, isLoading] = useAllData();
   const [count, setCount] = useState(0);
-  // console.log(allData.questions);
-//   console.log(isLoading);
-  // let count = 3
+  const [selectedIds, setSelectedIds] = useState([]);
 
   let questions = allData.questions;
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (questions) {
-      // console.log(selectedQuestion);
-
-      setSelectedQuestion(questions[count]);
-    }
-  }, [count, questions, selectedQuestion]);
-
+  
   const handleIncreate = () => {
     if (!selectedId) {
       Swal.fire({
@@ -32,50 +24,74 @@ const Quiz = () => {
         text: "Must select an option!!",
       });
     }
-    if (selectedId && count < 9) {
-      setCount(count + 1);
+    if (selectedId && count < 11) {
+      axios
+        .post("http://localhost:5000/ids", {selectedId})
+        .then((res) => {
+          console.log(res.data);
+        });
+      setCount((prevCount) => prevCount + 1);
+      console.log(count, selectedIds);
       setSelectedId(null);
     }
-    if (count == 9) {
-      if (mark < 5) {
-        Swal.fire({
-          icon: "warning",
-          title: `Your Obatained ${mark}`,
-          text: "Not so good. Study Hard!!",
-          showConfirmButton: false,
-          timer: 2500,
-        });
-      } else if (mark < 8) {
-        Swal.fire({
-          icon: "success",
-          title: `Your Obatained ${mark}`,
-          text: "Good. But should study more..!!",
-          showConfirmButton: false,
-          timer: 2500,
-        });
-      } else if (mark < 10) {
-        Swal.fire({
-          icon: "success",
-          title: `Your Obatained ${mark}`,
-          text: "Well done. Carry on.!!",
-          showConfirmButton: false,
-          timer: 2500,
-        });
-      } else {
-        Swal.fire({
-          icon: "success",
-          title: `Your Obatained ${mark}`,
-          text: "Excellent , Very Good, Wow..",
-          showConfirmButton: false,
-          timer: 2500,
-        });
-      }
+    console.log("count ", count);
+    if (count + 1 === 10) {
+      console.log(count, selectedIds);
+
+      
+      axios.post("http://localhost:5000/marks", { mark }).then((res) => {
+        console.log(res.data);
+      });
+     
+      Swal.fire({
+        title: "See Detail",
+        icon: "seuccess",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Detail",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/detail");
+        } else {
+          axios.delete("http://localhost:5000/ids").then((res) => {
+            console.log(res.data);
+          });
+          navigate("/");
+        }
+      });
+      // if (mark < 5) {
+      //   Swal.fire({
+      //     icon: "warning",
+      //     title: `Your Obatained ${mark}`,
+      //     text: "Not so good. Study Hard!!",
+      //     showConfirmButton: false,
+      //   });
+      // } else if (mark < 8) {
+      //   Swal.fire({
+      //     icon: "success",
+      //     title: `Your Obatained ${mark}`,
+      //     text: "Good. But should study more..!!",
+      //     showConfirmButton: false,
+      //   });
+      // } else if (mark < 10) {
+      //   Swal.fire({
+      //     icon: "success",
+      //     title: `Your Obatained ${mark}`,
+      //     text: "Well done. Carry on.!!",
+      //     showConfirmButton: false,
+      //   });
+      // } else {
+      //   Swal.fire({
+      //     icon: "success",
+      //     title: `Your Obatained ${mark}`,
+      //     text: "Excellent , Very Good, Wow..",
+      //     showConfirmButton: false,
+      //   });
+      // }
 
       setCount(0);
       setMark(0);
-      setTimeout(() => {
-        navigate("/");
-      }, 2500);
     }
     const result = selectedQuestion.options?.find(
       (option) => option.id == selectedId
@@ -90,6 +106,13 @@ const Quiz = () => {
     // console.log(option.id, selectedQuestion)
     setSelectedId(option.id);
   };
+
+  useEffect(() => {
+    if (questions && count < 10) {
+      setSelectedQuestion(questions[count]);
+    }
+  }, [count, questions]);
+
   return (
     <div className="flex min-h-screen justify-center items-center ">
       <Helmet>
@@ -97,7 +120,6 @@ const Quiz = () => {
       </Helmet>
       {isLoading ? (
         <span className="loading loading-bars loading-lg"></span>
-
       ) : (
         <div className="bg-white shadow-xl p-2 md:mx-20 md:p-10 w-full rounded-2xl border border-gray-200">
           <h1 className="text-xl md:text-4xl font-bold text-gray-800 mb-6">
