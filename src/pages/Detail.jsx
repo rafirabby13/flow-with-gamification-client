@@ -5,6 +5,7 @@ import { FaCheck } from "react-icons/fa";
 import { FiX } from "react-icons/fi";
 import { ImCross } from "react-icons/im";
 import useMark from "../hooks/useMark";
+import { Helmet } from "react-helmet";
 
 const Detail = () => {
   const data = useLoaderData();
@@ -17,6 +18,9 @@ const Detail = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+       <Helmet>
+        <title>Detail | Flow with Gamification</title>
+      </Helmet>
       <div className="flex items-center justify-between">
         <p className="text-xl md:text-4xl font-bold text-center py-4">
           You Obtained : {mark[0]?.mark}
