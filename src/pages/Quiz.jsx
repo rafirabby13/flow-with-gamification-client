@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import useAllData from "../hooks/useAllData";
 import Swal from "sweetalert2";
@@ -26,7 +27,7 @@ const Quiz = () => {
     }
     if (selectedId && count < 11) {
       axios
-        .post("http://localhost:5000/ids", {selectedId})
+        .post("https://flow-with-gamification-server.vercel.app/ids-post", {selectedId})
         .then((res) => {
           console.log(res.data);
         });
@@ -39,7 +40,7 @@ const Quiz = () => {
       console.log(count, selectedIds);
 
       
-      axios.post("http://localhost:5000/marks", { mark }).then((res) => {
+      axios.post("https://flow-with-gamification-server.vercel.app/marks", { mark }).then((res) => {
         console.log(res.data);
       });
      
@@ -54,7 +55,10 @@ const Quiz = () => {
         if (result.isConfirmed) {
           navigate("/detail");
         } else {
-          axios.delete("http://localhost:5000/ids").then((res) => {
+          axios.delete("https://flow-with-gamification-server.vercel.app/ids").then((res) => {
+            console.log(res.data);
+          });
+          axios.delete("https://flow-with-gamification-server.vercel.app/delete-marks").then((res) => {
             console.log(res.data);
           });
           navigate("/");

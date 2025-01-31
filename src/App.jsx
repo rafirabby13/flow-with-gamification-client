@@ -11,10 +11,10 @@ const App = () => {
   console.log(location)
   const home = location.pathname == '/'
   useEffect(()=>{
-    axios.delete("http://localhost:5000/ids").then((res) => {
+    axios.delete("https://flow-with-gamification-server.vercel.app/ids").then((res) => {
       console.log(res.data);
     });
-    axios.delete("http://localhost:5000/marks").then((res) => {
+    axios.delete("https://flow-with-gamification-server.vercel.app/delete-marks").then((res) => {
       console.log(res.data);
     });
   },[home])

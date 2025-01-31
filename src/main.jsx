@@ -19,7 +19,7 @@ const router = createBrowserRouter([
   {
     path: "detail",
     element: <Detail/>,
-    loader: ()=> fetch('http://localhost:5000/ids')
+    loader: ()=> fetch('https://flow-with-gamification-server.vercel.app/all-ids')
   },
 ]);
 createRoot(document.getElementById("root")).render(
