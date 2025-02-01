@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import axios from "axios";
+import useMark from "../hooks/useMark";
 const Quiz = () => {
   const [selectedId, setSelectedId] = useState(null);
   const [selectedQuestion, setSelectedQuestion] = useState({});
@@ -13,6 +14,7 @@ const Quiz = () => {
   const [count, setCount] = useState(0);
   const [selectedIds, setSelectedIds] = useState([]);
 
+ 
   let questions = allData.questions;
   const navigate = useNavigate();
 
@@ -45,7 +47,8 @@ const Quiz = () => {
       });
      
       Swal.fire({
-        title: "See Detail",
+        title: `Your Score is: ${mark}`,
+        text: 'See detail ',
         icon: "seuccess",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 const useMark = () => {
-    const {data: mark=[], isLoading} = useQuery({
+    const {data: totalMark=[], isLoading} = useQuery({
         queryKey: ['marks'],
         queryFn: async ()=>{
             const response = await fetch('https://flow-with-gamification-server.vercel.app/allmarks');
@@ -10,7 +10,7 @@ const useMark = () => {
           return result;
         }
       })
-      return [mark, isLoading]
+      return [totalMark, isLoading]
 }
 
 export default useMark
