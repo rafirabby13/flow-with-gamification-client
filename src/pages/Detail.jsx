@@ -44,7 +44,7 @@ const Detail = () => {
           <p className="text-gray-700 font-medium mt-2 flex items-center gap-2">
             <span className="text-blue-600 font-semibold">Your Ans:</span>{" "}
             {question.options?.map((option) =>
-              option.id === data[i].selectedId ? (
+              option.id === data[i]?.selectedId ? (
                 <span
                   key={option.id}
                   className="text-gray-800 flex items-center gap-2"
